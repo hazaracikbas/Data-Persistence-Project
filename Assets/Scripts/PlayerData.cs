@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
-//[RequireComponent(typeof(TMP_InputField))]
 
 public class PlayerData : MonoBehaviour
 {
@@ -15,6 +14,8 @@ public class PlayerData : MonoBehaviour
     public TextMeshProUGUI bestScoreText;
 
     public int bestScore = MainManager.highScore;
+    public string bestPlayer = MainManager.highScoreName;
+    
 
     private void Awake()
     {
@@ -26,10 +27,13 @@ public class PlayerData : MonoBehaviour
         }
 
         LoadPlayerName();
+        MainManager.LoadHighScore();
+        SetBestScore();
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
+
 
     public void SetUserName()
     {
@@ -44,13 +48,16 @@ public class PlayerData : MonoBehaviour
         }
     }
 
+    public void SetBestScore()
+    {
+        bestScoreText.text = "Best Score: " + MainManager.highScoreName + ": " + MainManager.highScore;
+    }
 
 
     [System.Serializable]
     class SaveData
     {
         public string playerInput;
-        public int bestScore;
     }
 
     public void SavePlayerName()
@@ -74,4 +81,5 @@ public class PlayerData : MonoBehaviour
             playerInput = data.playerInput;
         }
     }
+
 }
